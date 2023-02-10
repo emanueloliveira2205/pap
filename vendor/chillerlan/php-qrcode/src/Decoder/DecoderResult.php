@@ -17,10 +17,10 @@ use function property_exists;
 
 /**
  * Encapsulates the result of decoding a matrix of bits. This typically
- * applies to 2D barcode formats. For now it contains the raw bytes obtained,
+ * applies to 2D barcode formats. For now, it contains the raw bytes obtained
  * as well as a String interpretation of those bytes, if applicable.
  *
- * @property int[]                                 $rawBytes
+ * @property \chillerlan\QRCode\Common\BitBuffer   $rawBytes
  * @property string                                $data
  * @property \chillerlan\QRCode\Common\Version     $version
  * @property \chillerlan\QRCode\Common\EccLevel    $eccLevel
@@ -30,11 +30,11 @@ use function property_exists;
  */
 final class DecoderResult{
 
-	private array       $rawBytes;
-	private string      $data;
+	private BitBuffer   $rawBytes;
 	private Version     $version;
 	private EccLevel    $eccLevel;
 	private MaskPattern $maskPattern;
+	private string      $data = '';
 	private int         $structuredAppendParity = -1;
 	private int         $structuredAppendSequence = -1;
 
@@ -90,7 +90,7 @@ final class DecoderResult{
 	public function getMatrix():QRMatrix{
 		return (new QRMatrix($this->version, $this->eccLevel, $this->maskPattern))
 			->initFunctionalPatterns()
-			->writeCodewords(new BitBuffer($this->rawBytes))
+			->writeCodewords($this->rawBytes)
 			->mask()
 		;
 	}

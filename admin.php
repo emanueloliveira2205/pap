@@ -49,7 +49,7 @@
 						<div class="input-group mb-3">					
                         <input type="text" class="form-control" name="vaca" aria-label="">
                         <div class="input-group-append">
-						<?php $url='leitorqr2.html'; ?>
+						<?php $url='leitorqr.html'; ?>
                           <button onclick="window.location.href='<?php echo $url; ?>';"  target="_blank" type="button" class="btn btn-primary" >QRC</button>
                         </div>
 						<div class="card-header">

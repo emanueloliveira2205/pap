@@ -11,11 +11,13 @@
 namespace chillerlan\QRCode;
 
 use chillerlan\QRCode\Common\{EccLevel, ECICharset, MaskPattern, Mode, Version};
-use chillerlan\QRCode\Data\{AlphaNum, Byte, ECI, Kanji, Number, QRCodeDataException, QRData, QRDataModeInterface, QRMatrix};
+use chillerlan\QRCode\Data\{
+	AlphaNum, Byte, ECI, Hanzi, Kanji, Number, QRCodeDataException, QRData, QRDataModeInterface, QRMatrix
+};
 use chillerlan\QRCode\Decoder\{Decoder, DecoderResult, GDLuminanceSource, IMagickLuminanceSource, LuminanceSourceInterface};
 use chillerlan\QRCode\Output\{QRCodeOutputException, QROutputInterface};
 use chillerlan\Settings\SettingsContainerInterface;
-use function class_exists, class_implements, in_array, mb_convert_encoding, mb_detect_encoding;
+use function class_exists, class_implements, in_array, mb_convert_encoding, mb_internal_encoding;
 
 /**
  * Turns a text string into a Model 2 QR Code
@@ -183,7 +185,7 @@ class QRCode{
 	public function __construct(SettingsContainerInterface $options = null){
 		$this->options = $options ?? new QROptions;
 
-		// i hate this less
+		// I hate this less
 		if($this->options->readerUseImagickIfAvailable){
 			$this->luminanceSourceFQN = IMagickLuminanceSource::class;
 		}
@@ -231,9 +233,18 @@ class QRCode{
 
 		// add matrix modifications after mask pattern evaluation and before handing over to output
 		if($this->options->addLogoSpace){
+			$logoSpaceWidth  = $this->options->logoSpaceWidth;
+			$logoSpaceHeight = $this->options->logoSpaceHeight;
+
+			// check whether one of the dimensions was omitted
+			if($logoSpaceWidth === null || $logoSpaceHeight === null){
+				$logoSpaceWidth  = $logoSpaceWidth ?? $logoSpaceHeight ?? 0;
+				$logoSpaceHeight = null;
+			}
+
 			$matrix->setLogoSpace(
-				$this->options->logoSpaceWidth,
-				$this->options->logoSpaceHeight,
+				$logoSpaceWidth,
+				$logoSpaceHeight,
 				$this->options->logoSpaceStartX,
 				$this->options->logoSpaceStartY
 			);
@@ -335,7 +346,7 @@ class QRCode{
 	 * ISO/IEC 18004:2000 8.3.6 - Mixing modes
 	 * ISO/IEC 18004:2000 Annex H - Optimisation of bit stream length
 	 */
-	protected function addSegment(QRDataModeInterface $segment):void{
+	public function addSegment(QRDataModeInterface $segment):void{
 		$this->dataSegments[] = $segment;
 	}
 
@@ -371,12 +382,23 @@ class QRCode{
 	}
 
 	/**
-	 * Adds a Kanji data segment
+	 * Adds a Kanji data segment (Japanese 13-bit double-byte characters, Shift-JIS)
 	 *
 	 * ISO/IEC 18004:2000 8.3.5 - Kanji Mode
 	 */
 	public function addKanjiSegment(string $data):self{
 		$this->addSegment(new Kanji($data));
+
+		return $this;
+	}
+
+	/**
+	 * Adds a Hanzi data segment (simplified Chinese 13-bit double-byte characters, GB2312/GB18030)
+	 *
+	 * GBT18284-2000 Hanzi Mode
+	 */
+	public function addHanziSegment(string $data):self{
+		$this->addSegment(new Hanzi($data));
 
 		return $this;
 	}
@@ -395,6 +417,8 @@ class QRCode{
 	/**
 	 * Adds a standalone ECI designator
 	 *
+	 * The ECI designator must be followed by a Byte segment that contains the string encoded according to the given ECI charset
+	 *
 	 * ISO/IEC 18004:2000 8.3.1 - Extended Channel Interpretation (ECI) Mode
 	 */
 	public function addEciDesignator(int $encoding):self{
@@ -406,7 +430,9 @@ class QRCode{
 	/**
 	 * Adds an ECI data segment (including designator)
 	 *
-	 * i hate this somehow but i'll leave it for now
+	 * The given string will be encoded from mb_internal_encoding() to the given ECI character set
+	 *
+	 * I hate this somehow, but I'll leave it for now
 	 *
 	 * @throws \chillerlan\QRCode\QRCodeException
 	 */
@@ -417,7 +443,7 @@ class QRCode{
 		$eciCharsetName = $eciCharset->getName();
 		// convert the string to the given charset
 		if($eciCharsetName !== null){
-			$data = mb_convert_encoding($data, $eciCharsetName, mb_detect_encoding($data));
+			$data = mb_convert_encoding($data, $eciCharsetName, mb_internal_encoding());
 			// add ECI designator
 			$this->addSegment(new ECI($eciCharset->getID()));
 			$this->addSegment(new Byte($data));

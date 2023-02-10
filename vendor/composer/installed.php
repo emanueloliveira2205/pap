@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'emanu/pap',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '9f3acbdb70f4981e163490d7adbb18ef4545b937',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'chillerlan/php-qrcode' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '7fd54b78d8207fbd175bfd312472ec644d42d22e',
+            'reference' => 'd650fe73067c2559519f09949e9b71b466ab2bee',
             'type' => 'library',
             'install_path' => __DIR__ . '/../chillerlan/php-qrcode',
             'aliases' => array(
@@ -31,9 +31,9 @@
             'dev_requirement' => false,
         ),
         'emanu/pap' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '9f3acbdb70f4981e163490d7adbb18ef4545b937',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

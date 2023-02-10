@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/chillerlan/php-qrcode.git",
-                "reference": "7fd54b78d8207fbd175bfd312472ec644d42d22e"
+                "reference": "d650fe73067c2559519f09949e9b71b466ab2bee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/7fd54b78d8207fbd175bfd312472ec644d42d22e",
-                "reference": "7fd54b78d8207fbd175bfd312472ec644d42d22e",
+                "url": "https://api.github.com/repos/chillerlan/php-qrcode/zipball/d650fe73067c2559519f09949e9b71b466ab2bee",
+                "reference": "d650fe73067c2559519f09949e9b71b466ab2bee",
                 "shasum": ""
             },
             "require": {
@@ -30,7 +30,7 @@
                 "setasign/fpdf": "Required to use the QR FPDF output.",
                 "simple-icons/simple-icons": "SVG icons that you can use to embed as logos in the QR Code"
             },
-            "time": "2022-11-10T18:47:49+00:00",
+            "time": "2023-02-01T20:40:30+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",

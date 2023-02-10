@@ -25,7 +25,7 @@ namespaced, cleaned up, improved and other stuff. It also features a QR Code rea
 [scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-qrcode
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-qrcode.svg?logo=packagist
 [downloads]: https://packagist.org/packages/chillerlan/php-qrcode/stats
-[gh-action-badge]: https://img.shields.io/github/workflow/status/chillerlan/php-qrcode/Continuous%20Integration?logo=github
+[gh-action-badge]: https://img.shields.io/github/actions/workflow/status/chillerlan/php-qrcode/tests.yml?branch=main&logo=github
 [gh-action]: https://github.com/chillerlan/php-qrcode/actions/workflows/tests.yml?query=branch%3Amain
 
 ## Features
@@ -33,14 +33,15 @@ namespaced, cleaned up, improved and other stuff. It also features a QR Code rea
 - Generation of [Model 2 QR Codes](https://www.qrcode.com/en/codes/model12.html), [Version 1 to 40](https://www.qrcode.com/en/about/version.html)
 - [ECC Levels](https://www.qrcode.com/en/about/error_correction.html) L/M/Q/H supported
 - Mixed mode support (encoding modes can be mixed as needed within a QR symbol)
+  - Supported modes: numeric, alphanumeric, 8-bit binary as well as the 13-bit double-byte modes kanji (Japanese, Shift-JIS) and hanzi (simplified Chinese, GB2312/GB18030)
 - Flexible, easily extensible output modules
-- Built-in support for the following output formats:
-  - [GdImage](https://www.php.net/manual/book.image)
-  - [ImageMagick](https://www.php.net/manual/book.imagick)
-  - Markup types: SVG, HTML, etc.
-  - String types: JSON, plain text, etc.
-  - Encapsulated Postscript (EPS)
-  - PDF via [FPDF](https://github.com/setasign/fpdf)
+  - Built-in support for the following output formats:
+    - [GdImage](https://www.php.net/manual/book.image)
+    - [ImageMagick](https://www.php.net/manual/book.imagick)
+    - Markup types: SVG, HTML, etc.
+    - String types: JSON, plain text, etc.
+    - Encapsulated Postscript (EPS)
+    - PDF via [FPDF](https://github.com/setasign/fpdf)
 - QR Code reader (via GD and ImageMagick)
 
 ## Documentation
@@ -115,7 +116,6 @@ It's generally a good idea to wrap the reading in a try/catch block to handle an
 - WordPress:
   - [wp-two-factor-auth](https://github.com/sjinks/wp-two-factor-auth)
   - [simple-2fa](https://wordpress.org/plugins/simple-2fa/)
-  - [wordpress-seo](https://github.com/Yoast/wordpress-seo)
   - [floating-share-button](https://github.com/qriouslad/floating-share-button)
 - WoltLab Suite
   - [two-step-verification](http://pluginstore.woltlab.com/file/3007-two-step-verification/)
@@ -126,6 +126,8 @@ It's generally a good idea to wrap the reading in a try/catch block to handle an
   - [GÉANT CAT](https://github.com/GEANT/CAT)
   - [openITCOCKPIT](https://github.com/it-novum/openITCOCKPIT)
   - [twill](https://github.com/area17/twill)
+- Articles:
+  - https://www.twilio.com/blog/create-qr-code-in-php
 
 ### Shameless advertising
 Hi, please check out my other projects that are way cooler than qrcodes!
